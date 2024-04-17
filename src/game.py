@@ -5,6 +5,10 @@ from src.exceptions import (
     SelfDestructException, KoException, InvalidInputException)
 
 class Game(object):
+    
+    def select_players(self, player_list):
+        self.players=player_list
+    
     '''
     Manage the high level gameplay of Go
     '''
