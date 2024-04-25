@@ -133,9 +133,7 @@ class Board(np.ndarray):
                 if self._is_legal_move(stone, y, x):
                     legal_actions.append((y, x))
         return legal_actions
-
     
-       # Inside the Board class in board.py
     def _is_legal_move(self, stone, y, x):
         '''
         Check if placing a stone at (y, x) is a legal move.
@@ -146,36 +144,3 @@ class Board(np.ndarray):
             return False
         
         return True
-        # Check if the position is already occupied
-        #if self[y][x] != Stone.EMPTY:
-           # return False
-
-        # Check if placing a stone at (y, x) would capture opponent stones
-        captured_stones = []
-        for ly, lx in self.get_liberty_coords(y, x):
-            if self[ly][lx] != stone and self._group_is_captured(ly, lx):
-                captured_stones.append((ly, lx))
-
-        return bool(captured_stones)
-
-    def _group_is_captured(self, y, x):
-        
-        stone = self[y][x]
-        visited = set()
-        queue = [(y, x)]
-
-        while queue:
-            cy, cx = queue.pop()
-            if (cy, cx) in visited:
-                continue
-            visited.add((cy, cx))
-
-            for ny, nx in self.get_liberty_coords(cy, cx):
-                if self[ny][nx] == Stone.EMPTY:
-                    return False
-                elif self[ny][nx] == stone and (ny, nx) not in visited:
-                    queue.append((ny, nx))
-
-        return True
-
-   
