@@ -20,8 +20,8 @@ class Game(object):
         self.board_size = config['board_size']
 
         # group manager instance
-        self.gm = GroupManager(self.board,
-                               enable_self_destruct=config['enable_self_destruct'])
+        self.gm = GroupManager(self.board, True)
+                               #enable_self_destruct=config['enable_self_destruct'])
         
         # count the number of consecutive passes
         self.count_pass = 0
@@ -263,7 +263,7 @@ class GameUI(object):
         player = self._get_player_name(self.turn)
         while not self._is_valid_input(move):
             print('Please input a valid move'
-            '(enter "pass" to pass or "y x" to place a stone at the coordinate (y, x))')
+            '(enter "pass" to pass, "quit" to quit or "y x" to place a stone at the coordinate (y, x))')
             move = input(f'{player} move: ')
         
         return self._parse_move(move)
