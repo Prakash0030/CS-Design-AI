@@ -3,7 +3,7 @@ from src.board import Board
 from src.utils import Stone, make_2d_array
 from src.group import Group, GroupManager
 from src.exceptions import (
-    SelfDestructException, KoException, InvalidInputException)
+    NewException, SelfDestructException, KoException, InvalidInputException)
 
 class Game(object):
     '''
@@ -20,8 +20,8 @@ class Game(object):
         self.board_size = config['board_size']
 
         # group manager instance
-        self.gm = GroupManager(self.board, True)
-                               #enable_self_destruct=config['enable_self_destruct'])
+        self.gm = GroupManager(self.board, #True)
+                               enable_self_destruct=config['enable_self_destruct'])
         
         # count the number of consecutive passes
         self.count_pass = 0
@@ -64,17 +64,18 @@ class Game(object):
         if stone == Stone.EMPTY:
             return
         self.board.place_stone(stone, y, x)
+        self.count_pass = 0
 
         try:
             self.gm.resolve_board(y, x)
         except SelfDestructException as e:
             self.board.remove_stone(y, x)
-            raise e
+            self.count_pass = 4
+            raise NewException
         except KoException as e:
             self.board.remove_stone(y, x)
             raise e
             
-        self.count_pass = 0
         self.gm.update_state()
 
     @property
@@ -234,6 +235,9 @@ class GameUI(object):
                 self.game.place_black(y, x)
             elif self.turn == Stone.WHITE:
                 self.game.place_white(y, x)
+            is_turn_over = True
+        except NewException as f:
+            print(f)
             is_turn_over = True
         except Exception as e:
             print(e)

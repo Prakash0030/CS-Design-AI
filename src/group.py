@@ -192,6 +192,7 @@ class GroupManager(object):
             new_group.assign_group(None)
             if not self.enable_self_destruct:
                 self.undo_stone(y, x)
+                
                 raise SelfDestructException('Self destruction is not permitted. Please choose a different move.')
         
     def is_same_group(self, y1, x1, y2, x2):

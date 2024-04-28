@@ -6,3 +6,6 @@ class KoException(Exception):
 
 class InvalidInputException(Exception):
     pass
+
+class NewException(Exception):
+    pass
