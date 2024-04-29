@@ -1,4 +1,6 @@
+from src.AI1.AI1 import ImageInfillAI
 from src.AI2.AI2 import RandomAI
+from src.AI3.AI3 import ImageCNNAI
 from src.board import Board
 from src.utils import Stone, make_2d_array
 from src.group import Group, GroupManager
@@ -176,19 +178,35 @@ class GameUI(object):
             while not is_turn_over:
 
                 if (self.turn == Stone.BLACK):
-                    if(self.playerBLACK == "AI 2"):
+                    if(self.playerBLACK == "AI 1"):
+                        imageInfillAI = ImageInfillAI()
+                        move = imageInfillAI.nextMove(self)
+
+                    elif(self.playerBLACK == "AI 2"):
                         randomAI = RandomAI()
                         move = randomAI.nextMove(self)
-                        #self._parse_move(move)
+                    
+                    elif(self.playerBLACK == "AI 3"):
+                        imageCNNAI = ImageCNNAI()
+                        move = imageCNNAI.nextMove(self)
+
 
                     else:
                         move = self._prompt_move()
                 
                 elif (self.turn == Stone.WHITE):
-                    if(self.playerWHITE == "AI 2"):
-                        randomAI = RandomAI() 
+                    if(self.playerBLACK == "AI 1"):
+                        imageInfillAI = ImageInfillAI()
+                        move = imageInfillAI.nextMove(self)
+
+                    elif(self.playerBLACK == "AI 2"):
+                        randomAI = RandomAI()
                         move = randomAI.nextMove(self)
-                        #self._parse_move(move)
+                    
+                    elif(self.playerBLACK == "AI 3"):
+                        imageCNNAI = ImageCNNAI()
+                        move = imageCNNAI.nextMove(self)
+
 
                     else:
                         move = self._prompt_move()
